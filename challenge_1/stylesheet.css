@@ -1,9 +1,10 @@
 table {
 }
 th {
-  width: 100px;
-  height: 100px;
-  font-size: 40px;
+  width: 200px;
+  height: 200px;
+  font-size: 80px;
+  background-color: rgb(116, 171, 235);
 }
 
 table{
@@ -14,7 +15,7 @@ table{
 
 th,
 td {
-  border: 3px solid black;
+  border: 3px solid rgb(18, 57, 102);
   border-collapse: collapse;
 }
 

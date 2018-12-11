@@ -1,15 +1,20 @@
+import express from 'express'
+const app = express();
+
 let gameState = {
   board: [["", "", ""], ["", "", ""], ["", "", ""]],
   continueFlag: true,
   currentChar: "x",
-  rotate: "false"
+  rotate: "false",
+  xWin:0,
+  oWin:0
 };
+
 let obj = {
   x: "o",
   o: "x"
 };
-let xWin = 0;
-let oWin = 0;
+
 document.getElementById("xName").innerHTML = "x :";
 document.getElementById("oName").innerHTML = "o :";
 document.getElementById("resultX").innerHTML = "x won 0 times.";
@@ -25,7 +30,7 @@ document.getElementById("oName").onclick = () => {
 };
 
 let detectWin = () => {
-  for (let i of ["x", "o"]) {
+  for (let i in obj) {
     //vertical
     for (let k = 0; k < 3; k++) {
       for (let j = 0 + k * 3; j < 3 + k * 3; j++) {
@@ -37,6 +42,8 @@ let detectWin = () => {
         }
       }
     }
+
+
 
     //horizontal
     for (let m = 0; m < 3; m++) {
@@ -119,9 +126,9 @@ let gravity = gameBoard => {
 let printWin = char => {
   document.getElementById("result").innerHTML = `${char} is Winner!`;
   if (char === "x") {
-    document.getElementById("resultX").innerHTML = `x won ${++xWin} times.`;
+    document.getElementById("resultX").innerHTML = `x won ${++gameState.xWin} times.`;
   } else {
-    document.getElementById("resultO").innerHTML = `o won ${++oWin} times.`;
+    document.getElementById("resultO").innerHTML = `o won ${++gameState.oWin} times.`;
   }
   gameState.currentChar = char;
   return true;
