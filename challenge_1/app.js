@@ -1,6 +1,3 @@
-import express from 'express'
-const app = express();
-
 let gameState = {
   board: [["", "", ""], ["", "", ""], ["", "", ""]],
   continueFlag: true,
@@ -42,8 +39,6 @@ let detectWin = () => {
         }
       }
     }
-
-
 
     //horizontal
     for (let m = 0; m < 3; m++) {
@@ -142,13 +137,13 @@ for (let i = 0; i < 9; i++) {
         gameState.board[Math.floor(i / 3)][Math.floor(i % 3)] =
           gameState.currentChar;
         gameState.currentChar = obj[gameState.currentChar];
-        if (detectWin()) {
-          gameState.continueFlag = false;
-        }
         if (!gameState.rotate) {
           console.log(gameState.rotate);
           rotate(gameState);
           gravity(gameState);
+        }
+        if (detectWin()) {
+          gameState.continueFlag = false;
         }
       }
     }
