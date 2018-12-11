@@ -88,19 +88,27 @@ let rotate = gameBoard => {
 
 let gravity = gameBoard => {
   let newBoard = [["", "", ""], ["", "", ""], ["", "", ""]];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 2; i >= 0; i--) {
     for (let j = 0; j < 3; j++) {
-        if(i===0 && gameBoard.board[i+2][j]===''){
-            newBoard[i+2][j]===gameBoard.board[i][j];
-        }else if (i<2 && gameBoard.board[i+1][j]===''){
-            newBoard[i+1][j]===gameBoard.board[i][j];
-        }else {
-            newBoard[i][j]===gameBoard.board[i][j];
+      if (i === 2 && gameBoard.board[i][j]) {
+        newBoard[i][j] = gameBoard.board[i][j];
+      } else if (i === 1) {
+        if (newBoard[i + 1][j]) {
+          newBoard[i][j] = gameBoard.board[i][j];
+        } else {
+          newBoard[i + 1][j] = gameBoard.board[i][j];
         }
-      
+      } else if (i === 0) {
+        if (!newBoard[i + 2][j]) {
+          newBoard[i + 2][j] = gameBoard.board[i][j];
+        } else if (!newBoard[i + 1][j]) {
+          newBoard[i + 1][j] = gameBoard.board[i][j];
+        } else {
+          newBoard[i][j] = gameBoard.board[i][j];
+        }
+      }
     }
   }
-  console.log(newBoard);
   gameState.board = newBoard;
   for (let i = 0; i < 9; i++) {
     document.getElementById(`${i}`).innerHTML =
@@ -133,8 +141,8 @@ for (let i = 0; i < 9; i++) {
         if (!gameState.rotate) {
           console.log(gameState.rotate);
           rotate(gameState);
+          gravity(gameState);
         }
-        // gravity(gameState);
       }
     }
   };
@@ -164,10 +172,3 @@ document.getElementById("rotate").onclick = () => {
     document.getElementById("rotate").style.color = "black";
   }
 };
-
-// document.getElementById("0").onclick = () => {
-//   if (!document.getElementById("0").innerHTML) {
-//     document.getElementById("0").innerHTML = currentChar;
-//     currentChar = obj[currentChar];
-//   }
-// };
