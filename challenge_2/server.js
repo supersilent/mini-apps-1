@@ -6,17 +6,19 @@ let express = require("express");
 let app = express();
 let controller = require("./controller");
 let path = require("path");
-let bodyParser = require("body-parser");
+// let bodyParser = require("body-parser");
+let upload = multer({dest:'uploads/'});
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "client/index.html"));
 });
 
-app.post("/", (req, res) => {
-  let jsonData = JSON.parse(req.body.jsonform);
+app.post("/", upload.single('jsonform'),(req, res) => {
+  let jsonData = JSON.parse(req.file);
   let cvsData = controller.jsonConverter(jsonData);
   res.send(cvsData);
 });
