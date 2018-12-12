@@ -4,13 +4,21 @@
 
 let express = require("express");
 let app = express();
+let controller = require("./controller");
+let path = require("path");
+let bodyParser = require("body-parser");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.send('hello world!');
+  res.sendFile(path.join(__dirname, "client/index.html"));
 });
 
-app.post('/json', (req, res) => {
-    let jsonData = req.body;
-})
+app.post("/", (req, res) => {
+  let jsonData = JSON.parse(req.body.jsonform);
+  let cvsData = controller.jsonConverter(jsonData);
+  res.send(cvsData);
+});
 
 app.listen(3000);
