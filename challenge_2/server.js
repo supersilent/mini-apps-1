@@ -6,11 +6,14 @@ let express = require("express");
 let app = express();
 let controller = require("./controller");
 let path = require("path");
-// let bodyParser = require("body-parser");
+let bodyParser = require("body-parser");
+var multer  = require('multer')
 let upload = multer({dest:'uploads/'});
+let fs = require('fs');
+
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
@@ -18,8 +21,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", upload.single('jsonform'),(req, res) => {
-  let jsonData = JSON.parse(req.file);
-  let cvsData = controller.jsonConverter(jsonData);
+//   let jsonData = req.file;
+let data = JSON.parse(fs.readFileSync(req.file.path));
+  let cvsData = controller.jsonConverter(data);
   res.send(cvsData);
 });
 
