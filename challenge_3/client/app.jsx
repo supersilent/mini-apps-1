@@ -11,7 +11,7 @@ class F1 extends React.Component {
         Name : <input type="text" name="name" /> <br />
         E-mail : <input type="text" name="e-mail" /> <br />
         Password <input type="text" name="password" /> <br />
-        <input type="submit" value="Next"/>
+        <input type="submit" value="Next" />
       </form>
     );
   }
@@ -34,9 +34,9 @@ class Shopping extends React.Component {
     super(props);
     this.state = {
       currentPage: null,
-      name:null,
-      email:null,
-      password:null
+      name: null,
+      email: null,
+      password: null
     };
   }
   handleTransition(page) {
@@ -44,13 +44,18 @@ class Shopping extends React.Component {
     // console.log(this.state.currentPage);
   }
   handleSubmitF1(name, email, password) {
-    this.setState({currentPage:'F2', name, email, password});
+    this.setState({ currentPage: "F2", name, email, password });
   }
 
   render() {
     let page;
     if (this.state.currentPage === "F1") {
-      page = <F1 func={page => this.handleTransition(page)} onSubmit={this.handleSubmitF1} />;
+      page = (
+        <F1
+          func={page => this.handleTransition(page)}
+          onSubmit={this.handleSubmitF1}
+        />
+      );
     } else if (this.state.currentPage === "F2") {
       page = <F2 />;
     } else {
